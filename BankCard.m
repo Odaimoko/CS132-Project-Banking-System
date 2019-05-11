@@ -5,7 +5,7 @@ classdef BankCard
     properties
         
         ID=0;
-        ownerID=0;
+        ownerPID=0;
     end
     
     methods

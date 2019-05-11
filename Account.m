@@ -5,13 +5,16 @@ classdef Account
     properties
         ownerPID=0;
         ID=0;
+        balance=0;
     end
     
     methods
-        function obj = Account(inputArg1,inputArg2)
+        function obj = Account(ownerPID,account_id)
             %ACCOUNT 构造此类的实例
             %   此处显示详细说明
-            obj.Property1 = inputArg1 + inputArg2;
+            obj.ownerPID = ownerPID;
+            obj.ID=account_id;
+            obj.balance=0;
         end
         
         function outputArg = checkBalance(obj,inputArg)

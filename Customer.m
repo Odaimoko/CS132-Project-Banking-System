@@ -3,7 +3,7 @@ classdef Customer
     %   此处显示详细说明
     
     properties
-        ID=0;
+        PID=0; % identity number
     end
     
     methods

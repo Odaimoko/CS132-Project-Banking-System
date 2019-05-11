@@ -3,17 +3,25 @@ classdef Functional_Account < Functional
     %   此处显示详细说明
     
     properties
-        Property1
+        
     end
     
     methods
-        function obj = Functional_Account(inputArg1,inputArg2)
-            %FUNCTIONAL 构造此类的实例
-            %   此处显示详细说明
-            obj.Property1 = inputArg1 + inputArg2;
+        function obj = Functional_Account( ) 
         end
         
-        function outputArg = createAccount(obj,inputArg)
+        function outputArg = openAccount(obj,bs,person_id,password)
+            %METHOD1 此处显示有关此方法的摘要
+            %   此处显示详细说明
+            % get new account id from account_db
+            accound_id=0;
+            bs
+            account=Account(person_id,accound_id);
+            outputArg=accound_id;
+
+        end
+
+        function outputArg = closeAccount(obj,account_db,account,person_id,password)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             outputArg = obj.Property1 + inputArg;

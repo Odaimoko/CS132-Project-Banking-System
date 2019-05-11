@@ -45,7 +45,7 @@ classdef Banking_system
 
             A=obj.db_account('accounts');
             if ~isKey(A,person_id)
-                A(person_id)=account
+                A(person_id)=account;
                 save 'data/sys.mat' obj
                 outputArg=true;
             else
@@ -76,9 +76,28 @@ classdef Banking_system
                     account.cards=cards;
                     A(person_id)=account;
                     save 'data/sys.mat' obj
+                    outputArg=true;
                 else
                     outputArg=false;
                 end
+            end
+        end
+
+
+        function outputArg = removeAccount(obj,person_id,password)
+
+            A=obj.db_account('accounts');
+            if isKey(A,person_id)
+                account=A(person_id);
+                if strcmp(password,account.password)
+                    remove(obj.db_account('accounts'),person_id);
+                    outputArg=true;
+                else
+                    % pw wrong
+                    outputArg=false;
+                end
+            else
+                outputArg=false;
             end
         end
 

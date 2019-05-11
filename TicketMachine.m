@@ -1,35 +1,29 @@
-classdef Account
-    %ACCOUNT 此处显示有关此类的摘要
+classdef TicketMachine
+    %TICKETMACHINE 此处显示有关此类的摘要
     %   此处显示详细说明
     
     properties
-        ownerPID=0;
-        ID=0;
+        Property1
     end
     
     methods
-        function obj = Account(inputArg1,inputArg2)
-            %ACCOUNT 构造此类的实例
+        function obj = TicketMachine(inputArg1,inputArg2)
+            %TICKETMACHINE 构造此类的实例
             %   此处显示详细说明
             obj.Property1 = inputArg1 + inputArg2;
         end
         
-        function outputArg = checkBalance(obj,inputArg)
+        function outputArg = printTicket(obj,inputArg)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             outputArg = obj.Property1 + inputArg;
         end
-        function outputArg = debit(obj,inputArg)
+        function outputArg = createTicket(obj,inputArg)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             outputArg = obj.Property1 + inputArg;
         end
-        function outputArg = credit(obj,inputArg)
-            %METHOD1 此处显示有关此方法的摘要
-            %   此处显示详细说明
-            outputArg = obj.Property1 + inputArg;
-        end
-        function outputArg = transaction(obj,inputArg)
+        function outputArg = accessTicketDB(obj,inputArg)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             outputArg = obj.Property1 + inputArg;

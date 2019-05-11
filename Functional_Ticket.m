@@ -1,21 +1,19 @@
-classdef BankCard
-    %BANKCARD 此处显示有关此类的摘要
+classdef Functional_Ticket < Functional
+    %FUNCTIONAL 此处显示有关此类的摘要
     %   此处显示详细说明
     
     properties
-        
-        ID=0;
-        ownerID=0;
+        Property1
     end
     
     methods
-        function obj = BankCard(inputArg1,inputArg2)
-            %BANKCARD 构造此类的实例
+        function obj = Functional_Ticket(inputArg1,inputArg2)
+            %FUNCTIONAL 构造此类的实例
             %   此处显示详细说明
             obj.Property1 = inputArg1 + inputArg2;
         end
         
-        function outputArg = provideAccess(obj,inputArg)
+        function outputArg = getTicket(obj,inputArg)
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             outputArg = obj.Property1 + inputArg;

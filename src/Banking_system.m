@@ -78,8 +78,10 @@ classdef Banking_system
         function outputArg = removeAccount(obj,person_id,account_id,password)
             outputArg=false;
             A=obj.db_account('accounts');
-            if isKey(A,person_id)
-                account=A(person_id);
+            if isKey(A,account_id)
+                account=A(account_id);
+                strcmp(password,account.password)
+                person_id==account.personID
                 if strcmp(password,account.password) && person_id==account.personID
                     remove(obj.db_account('accounts'),account_id)
                     save 'data/sys.mat' obj

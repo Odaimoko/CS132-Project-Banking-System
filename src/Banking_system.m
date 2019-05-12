@@ -75,6 +75,17 @@ classdef Banking_system
         end
 
 
+        function outputArg = checkPW(obj,account_id,password)
+            outputArg=false;
+            A=obj.db_account('accounts');
+            if isKey(A,account_id)
+                account=A(account_id);
+                if strcmp(password,account.password)
+                    outputArg=true;
+                end
+            end
+        end
+
         function outputArg = removeAccount(obj,person_id,account_id)
             outputArg=false;
             A=obj.db_account('accounts');
@@ -88,20 +99,14 @@ classdef Banking_system
             end
         end
 
-        function outputArg = changePassword(obj,account_id,password,new_pw)
-            outputArg=false;
+
+        function outputArg = changePassword(obj,account_id,new_pw)
             A=obj.db_account('accounts');
-            if isKey(A,account_id)
-                account=A(account_id);
-                if strcmp(password,account.password)
-                    account.password=new_pw;
-                    A(account_id)=account;
-                    save 'data/sys.mat' obj
-                    outputArg=true;
-                end
-            end
-            
-        
+            account=A(account_id);
+            account.password=new_pw;
+            A(account_id)=account;
+            save 'data/sys.mat' obj
+            outputArg=true;
         end
         
 

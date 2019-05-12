@@ -39,39 +39,34 @@ classdef Banking_system
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             account=struct;
+            account.accoutID=obj.db_account('nextAccountID');
+            account.personID=person_id;
             account.cards=containers.Map;
             account.password=password; %????
             obj.db_account('nextAccountID')=obj.db_account('nextAccountID')+1;
 
             A=obj.db_account('accounts');
-            if ~isKey(A,person_id)
-                A(person_id)=account;
-                save 'data/sys.mat' obj
-                outputArg=true;
-            else
-                outputArg=false;
-            end
+            A(account.accoutID)=account;
+            obj.db_account('accounts')=A;
+            save 'data/sys.mat' obj
+            outputArg=true;
         end
 
 
-        function outputArg = addCard(obj,person_id,password)
-            %METHOD1 此处显示有关此方法的摘要
-            %   此处显示详细说明
-
+        function outputArg = addCard(obj,person_id,account_id,password)
             A=obj.db_account('accounts');
-            if ~isKey(A,person_id)
+            if ~isKey(A,account_id)
                 outputArg=false;
-            
             else
+                account=A(account_id);
+                if strcmp(password,account.password) && strcmp(person_id,account.personID)
+                    cardID=obj.db_account('nextCardID');
+                    obj.db_account('nextCardID')=obj.db_account('nextCardID')+1;
 
-                cardID=obj.db_account('nextCardID');
-                obj.db_account('nextCardID')=obj.db_account('nextCardID')+1;
-                account=A(person_id);
-                if strcmp(password,account.password)
                     cards=account.cards;
-                    cards(cardID)=0;
+                    cards(cardID)=0; % balance = 0
                     account.cards=cards;
-                    A(person_id)=account;
+                    A(account_id)=account;
                     save 'data/sys.mat' obj
                     outputArg=true;
                 else

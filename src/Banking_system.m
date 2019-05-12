@@ -75,14 +75,12 @@ classdef Banking_system
         end
 
 
-        function outputArg = removeAccount(obj,person_id,account_id,password)
+        function outputArg = removeAccount(obj,person_id,account_id)
             outputArg=false;
             A=obj.db_account('accounts');
             if isKey(A,account_id)
                 account=A(account_id);
-                strcmp(password,account.password)
-                person_id==account.personID
-                if strcmp(password,account.password) && person_id==account.personID
+                if person_id==account.personID
                     remove(obj.db_account('accounts'),account_id)
                     save 'data/sys.mat' obj
                     outputArg=true;
@@ -90,6 +88,22 @@ classdef Banking_system
             end
         end
 
+        function outputArg = changePassword(obj,account_id,password,new_pw)
+            outputArg=false;
+            A=obj.db_account('accounts');
+            if isKey(A,account_id)
+                account=A(account_id);
+                if strcmp(password,account.password)
+                    account.password=new_pw;
+                    A(account_id)=account;
+                    save 'data/sys.mat' obj
+                    outputArg=true;
+                end
+            end
+            
+        
+        end
+        
 
         function ticket_no = getTicket(obj)
             %METHOD1 此处显示有关此方法的摘要

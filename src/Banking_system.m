@@ -39,7 +39,7 @@ classdef Banking_system
             %METHOD1 此处显示有关此方法的摘要
             %   此处显示详细说明
             account=struct;
-            account.cards={}
+            account.cards=containers.Map;
             account.password=password; %????
             obj.db_account('nextAccountID')=obj.db_account('nextAccountID')+1;
 
@@ -64,15 +64,12 @@ classdef Banking_system
             
             else
 
-                card=struct;
-                card.cardID=obj.db_account('nextCardID');
-                card.bal=0;
+                cardID=obj.db_account('nextCardID');
                 obj.db_account('nextCardID')=obj.db_account('nextCardID')+1;
                 account=A(person_id);
                 if strcmp(password,account.password)
                     cards=account.cards;
-                    l=length(cards);
-                    cards{l+1}=card;
+                    cards(cardID)=0;
                     account.cards=cards;
                     A(person_id)=account;
                     save 'data/sys.mat' obj
@@ -83,6 +80,23 @@ classdef Banking_system
             end
         end
 
+        function outputArg = removeCard(obj,card_id,person_id,password)
+            outputArg=false;
+
+            A=obj.db_account('accounts');
+            if isKey(A,person_id)
+                account=A(person_id);
+                if strcmp(password,account.password)
+                    if isKey(card_id,account.cards)
+                        remove(account.cards,card_id);
+                        outputArg=true;
+                        A(person_id)=account;
+                    end
+                    % remove(obj.db_account('accounts'),person_id);
+                end
+            else
+            end
+        end
 
         function outputArg = removeAccount(obj,person_id,password)
 

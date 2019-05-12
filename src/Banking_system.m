@@ -44,7 +44,7 @@ classdef Banking_system
             account.personID=person_id;
             account.cards=containers.Map(0,0);
             remove(account.cards,0);
-            account.password=password; %????
+            account.password=password; 
             obj.db_account('nextAccountID')=obj.db_account('nextAccountID')+1;
 
             A=obj.db_account('accounts');
@@ -107,6 +107,25 @@ classdef Banking_system
             A(account_id)=account;
             save 'data/sys.mat' obj
             outputArg=true;
+        end
+        
+        function outputArg = deposit(obj,account_id,amount)
+        %
+        % Deposit certain amount into account_id.
+            outputArg=false;
+            A=obj.db_account('accounts');
+            if isKey(A,account_id)
+                account=A(account_id);
+                cards=account.cards;
+                assert (length(cards)==1)
+                k=keys(cards);
+                k=k{1};
+                cards(k)=cards(k)+amount;
+                % account.cards=cards;
+                save 'data/sys.mat' obj
+                outputArg=true;
+            end
+        
         end
         
 

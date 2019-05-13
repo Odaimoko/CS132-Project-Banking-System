@@ -127,6 +127,12 @@ classdef Banking_system
             end
         
         end
+
+        function outputArg = withdraw(obj,account,password,amount)
+            
+        
+        end
+        
         
 
         function ticket_no = getTicket(obj)

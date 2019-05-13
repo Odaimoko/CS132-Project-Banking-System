@@ -16,15 +16,28 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
         PW_Input                matlab.ui.control.EditField
         Confirm_open_account    matlab.ui.control.Button
         Confirm_close_account   matlab.ui.control.Button
-        CardNoLabel             matlab.ui.control.Label
-        Card_Input              matlab.ui.control.EditField
         Confirm_deposit_money   matlab.ui.control.Button
-        AmountLabel             matlab.ui.control.Label
-        Money_Input             matlab.ui.control.EditField
         Confirm_withdraw_money  matlab.ui.control.Button
         Message_Feedback        matlab.ui.control.Label
+        AccountNoLabel          matlab.ui.control.Label
+        Account_Input           matlab.ui.control.NumericEditField
+        NewPasswordLabel        matlab.ui.control.Label
+        New_PW_Input            matlab.ui.control.EditField
+        Confirm_change_pw       matlab.ui.control.Button
+        AmountLabel             matlab.ui.control.Label
+        Amount_Input            matlab.ui.control.NumericEditField
     end
 
+    
+    properties (Access = private)
+        x_edit_box=103;
+        w_edit_box=100;
+        h_edit_box=22;
+        y_1st_edit_box=367; % Description
+        y_2nd_edit_box=334; % Description
+        y_3rd_edit_box=301;
+        y_4th_edit_box=268;
+    end
     
     methods (Access = private)
         
@@ -32,16 +45,22 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             % invisiblize all changable ui components
             app.Identity_Input.Visible='off';
             app.PW_Input.Visible=0;
-            app.Card_Input.Visible=0;
-            app.Money_Input.Visible=0;
+            app.Account_Input.Visible=0;
+            app.Amount_Input.Visible=0;
+            app.New_PW_Input.Visible=0;
             app.Confirm_open_account.Visible=0;
             app.Confirm_close_account.Visible=0;
             app.Confirm_deposit_money.Visible=0;
             app.Confirm_withdraw_money.Visible=0;
+            app.Confirm_change_pw.Visible=0;
             app.IdLabel.Visible=0;
             app.PasswordLabel.Visible=0;
-            app.CardNoLabel.Visible=0;
+            app.AccountNoLabel.Visible=0;
             app.AmountLabel.Visible=0;
+            app.NewPasswordLabel.Visible=0;
+            
+            
+            app.Message_Feedback.Visible=0;
         end
     end
     
@@ -57,54 +76,100 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             if strcmp(selectedButton.Text,app.open_account.Text)
                 'Open account'
                 app.Identity_Input.Visible=1;
-                app.PW_Input.Visible=1;
-                app.Confirm_open_account.Visible=1;
                 app.IdLabel.Visible=1;
+                app.Identity_Input.Position(2)=app.y_1st_edit_box;
+                app.IdLabel.Position(2)=app.y_1st_edit_box;
+                
+                app.PW_Input.Visible=1;
                 app.PasswordLabel.Visible=1;
+                app.PW_Input.Position(2)=app.y_2nd_edit_box;
+                app.PasswordLabel.Position(2)=app.y_2nd_edit_box;
 
+                
+                app.Confirm_open_account.Visible=1;
 
             end
             if strcmp(selectedButton.Text,app.close_account.Text)
                 'Close account'
                 
                 app.Identity_Input.Visible=1;
-                app.PW_Input.Visible=1;
-                app.Card_Input.Visible=1;
-                app.Confirm_close_account.Visible=1;
                 app.IdLabel.Visible=1;
-                app.PasswordLabel.Visible=1;
-                app.CardNoLabel.Visible=1;
+                app.Identity_Input.Position(2)=app.y_1st_edit_box;
+                app.IdLabel.Position(2)=app.y_1st_edit_box;
                 
+                app.PW_Input.Visible=1;
+                app.PasswordLabel.Visible=1;
+                app.PW_Input.Position(2)=app.y_2nd_edit_box;
+                app.PasswordLabel.Position(2)=app.y_2nd_edit_box;
+                
+                app.Account_Input.Visible=1;
+                app.AccountNoLabel.Visible=1;
+                app.Account_Input.Position(2)= app.y_3rd_edit_box;
+                app.AccountNoLabel.Position(2)=app.y_3rd_edit_box;
+                
+                app.Confirm_close_account.Visible=1;
             end
             if strcmp(selectedButton.Text,app.deposit.Text)
                 'Deposit'
+                app.AccountNoLabel.Visible=1;
+                app.Account_Input.Visible=1;
+                app.Account_Input.Position(2)=app.y_1st_edit_box;
+                app.AccountNoLabel.Position(2)=app.y_1st_edit_box;
                 
-                app.Identity_Input.Visible=1;
-                app.PW_Input.Visible=1;
-                app.Card_Input.Visible=1;
-                app.Money_Input.Visible=1;
-                app.Confirm_deposit_money.Visible=1;
-                app.IdLabel.Visible=1;
-                app.PasswordLabel.Visible=1;
-                app.CardNoLabel.Visible=1;
                 app.AmountLabel.Visible=1;
+                app.Amount_Input.Visible=1;
+                app.Amount_Input.Position(2)=app.y_2nd_edit_box;
+                app.AmountLabel.Position(2)=app.y_2nd_edit_box;
+                
+                app.Confirm_deposit_money.Visible=1;
+                app.Confirm_deposit_money.Position(2)=app.y_3rd_edit_box;
                 
             end
             if strcmp(selectedButton.Text,app.withdraw.Text)
                 'Withdraw'
-                app.Identity_Input.Visible=1;
+                
+                app.AccountNoLabel.Visible=1;
+                app.Account_Input.Visible=1;
+                app.Account_Input.Position(2)=app.y_1st_edit_box;
+                app.AccountNoLabel.Position(2)=app.y_1st_edit_box;
+                
                 app.PW_Input.Visible=1;
-                app.Card_Input.Visible=1;
-                app.Money_Input.Visible=1;
-                app.Confirm_withdraw_money.Visible=1;
-                app.IdLabel.Visible=1;
                 app.PasswordLabel.Visible=1;
-                app.CardNoLabel.Visible=1;
+                app.PW_Input.Position(2)=app.y_2nd_edit_box;
+                app.PasswordLabel.Position(2)=app.y_2nd_edit_box;
+                
                 app.AmountLabel.Visible=1;
+                app.Amount_Input.Visible=1;
+                app.Amount_Input.Position(2)=app.y_3rd_edit_box;
+                app.AmountLabel.Position(2)=app.y_3rd_edit_box;
+                
+                app.Confirm_withdraw_money.Visible=1;
+                
 %                 
             end
             if strcmp(selectedButton.Text,app.transfer.Text)
                 'Transfer'
+            end
+            if strcmp(selectedButton.Text,app.change_password.Text)
+                'Change Password'
+                
+                app.AccountNoLabel.Visible=1;
+                app.Account_Input.Visible=1;
+                app.Account_Input.Position(2)=app.y_1st_edit_box;
+                app.AccountNoLabel.Position(2)=app.y_1st_edit_box;
+                
+                app.PW_Input.Visible=1;
+                app.PasswordLabel.Visible=1;
+                app.PW_Input.Position(2)=app.y_2nd_edit_box;
+                app.PasswordLabel.Position(2)=app.y_2nd_edit_box;
+                
+                app.New_PW_Input.Visible=1;
+                app.NewPasswordLabel.Visible=1;
+                app.New_PW_Input.Position(2)=app.y_3rd_edit_box;
+                app.NewPasswordLabel.Position(2)=app.y_3rd_edit_box;
+
+                app.Confirm_change_pw.Visible=1;
+
             end
             
         end
@@ -115,34 +180,101 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             pw=app.PW_Input.Value;
             if identity_no==0
                 app.Message_Feedback.Text='Id cannot be emtpy';
-                app.Message_Feedback.Position=[243,367,158,22];
-                app.Message_Feedback.Visible=1;
             else
                 if pw==""
                     app.Message_Feedback.Text='Password cannot be emtpy';
-                    app.Message_Feedback.Position=[243,367,158,22];
-                    app.Message_Feedback.Visible=1;
                 else
                     app.Message_Feedback.Text="";
-                    app.Message_Feedback.Visible=0;
                     bs=Banking_system;
-                    result=bs.addAccount(identity_no,pw);
+                    account_id=bs.addAccount(identity_no,pw);
+                    result=bs.addCard(identity_no,account_id,pw);
                     if result
-                        
-                        app.Message_Feedback.Text='Account added successfully';
+                        app.Message_Feedback.Text=['Card added successfully. ' newline 'Card No. ' num2str(result)];
                     else
-                        
-                        app.Message_Feedback.Text='Account already exists';
+                        app.Message_Feedback.Text='Card added Failed';
                     end
-                    app.Message_Feedback.Position=[243,367,158,22];
-                    app.Message_Feedback.Visible=1;
                 end
             end
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
             
         end
 
         % Button pushed function: Confirm_close_account
         function Confirm_close_accountButtonPushed(app, event)
+            identity_no=app.Identity_Input.Value;
+            pw=app.PW_Input.Value;
+            account_id=app.Account_Input.Value;
+            app.Message_Feedback.Visible=0;
+            if identity_no==0
+                app.Message_Feedback.Text='Id cannot be emtpy';
+            else
+                if pw==""
+                    app.Message_Feedback.Text='Password cannot be emtpy';
+                else
+                    app.Message_Feedback.Text='Card removed Failed';
+                    bs=Banking_system;
+                    if bs.checkPW(account_id,pw)
+                        result=bs.removeAccount(identity_no,account_id);
+                        if result
+                            app.Message_Feedback.Text='Card removed successfully.';
+                        end
+                    end
+                end
+            end
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
+            
+        end
+
+        % Button pushed function: Confirm_change_pw
+        function Confirm_change_pwButtonPushed(app, event)
+            pw=app.PW_Input.Value;
+            account_id=app.Account_Input.Value;
+            new_pw=app.New_PW_Input.Value;
+            app.Message_Feedback.Visible=0;
+
+            if account_id==0
+                app.Message_Feedback.Text='Id cannot be emtpy';
+            else
+                if pw=="" || new_pw==""
+                    app.Message_Feedback.Text='Password cannot be emtpy';
+                else
+                    bs=Banking_system;
+                    app.Message_Feedback.Text='Password change Failed';
+                    if bs.checkPW(account_id,pw)
+                        bs.changePassword(account_id,new_pw);
+                        app.Message_Feedback.Text='Password changed successfully.';
+                    end
+                end
+            end
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
+        end
+
+        % Button pushed function: Confirm_deposit_money
+        function Confirm_deposit_moneyButtonPushed(app, event)
+            account_id=app.Account_Input.Value;
+            amount=app.Amount_Input.Value;
+            
+            if account_id==0
+                app.Message_Feedback.Text='Id cannot be emtpy';
+            else
+                if amount==0
+                    app.Message_Feedback.Text='Amount cannot be emtpy';
+                else
+                    bs=Banking_system;
+                    if bs.deposit(account_id,amount)                   
+                        app.Message_Feedback.Text='Amount added successfully';
+                    end
+                end
+            end
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
+        end
+
+        % Button pushed function: Confirm_withdraw_money
+        function Confirm_withdraw_moneyButtonPushed(app, event)
             
         end
     end
@@ -224,41 +356,19 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             app.Confirm_close_account = uibutton(app.UIFigure, 'push');
             app.Confirm_close_account.ButtonPushedFcn = createCallbackFcn(app, @Confirm_close_accountButtonPushed, true);
             app.Confirm_close_account.Visible = 'off';
-            app.Confirm_close_account.Position = [103 271 100 22];
+            app.Confirm_close_account.Position = [103 268 100 22];
             app.Confirm_close_account.Text = 'Confirm';
-
-            % Create CardNoLabel
-            app.CardNoLabel = uilabel(app.UIFigure);
-            app.CardNoLabel.HorizontalAlignment = 'right';
-            app.CardNoLabel.Visible = 'off';
-            app.CardNoLabel.Position = [34 300 54 22];
-            app.CardNoLabel.Text = 'Card No.';
-
-            % Create Card_Input
-            app.Card_Input = uieditfield(app.UIFigure, 'text');
-            app.Card_Input.Visible = 'off';
-            app.Card_Input.Position = [103 300 100 22];
 
             % Create Confirm_deposit_money
             app.Confirm_deposit_money = uibutton(app.UIFigure, 'push');
+            app.Confirm_deposit_money.ButtonPushedFcn = createCallbackFcn(app, @Confirm_deposit_moneyButtonPushed, true);
             app.Confirm_deposit_money.Visible = 'off';
             app.Confirm_deposit_money.Position = [103 236 100 22];
             app.Confirm_deposit_money.Text = 'Confirm';
 
-            % Create AmountLabel
-            app.AmountLabel = uilabel(app.UIFigure);
-            app.AmountLabel.HorizontalAlignment = 'right';
-            app.AmountLabel.Visible = 'off';
-            app.AmountLabel.Position = [40 269 48 22];
-            app.AmountLabel.Text = 'Amount';
-
-            % Create Money_Input
-            app.Money_Input = uieditfield(app.UIFigure, 'text');
-            app.Money_Input.Visible = 'off';
-            app.Money_Input.Position = [103 269 100 22];
-
             % Create Confirm_withdraw_money
             app.Confirm_withdraw_money = uibutton(app.UIFigure, 'push');
+            app.Confirm_withdraw_money.ButtonPushedFcn = createCallbackFcn(app, @Confirm_withdraw_moneyButtonPushed, true);
             app.Confirm_withdraw_money.Visible = 'off';
             app.Confirm_withdraw_money.Position = [103 236 100 22];
             app.Confirm_withdraw_money.Text = 'Confirm';
@@ -269,6 +379,49 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             app.Message_Feedback.Visible = 'off';
             app.Message_Feedback.Position = [242.5 367 158 22];
             app.Message_Feedback.Text = 'Identity No cannot be empty';
+
+            % Create AccountNoLabel
+            app.AccountNoLabel = uilabel(app.UIFigure);
+            app.AccountNoLabel.HorizontalAlignment = 'right';
+            app.AccountNoLabel.Visible = 'off';
+            app.AccountNoLabel.Position = [-1 300 89 23];
+            app.AccountNoLabel.Text = 'Account No.';
+
+            % Create Account_Input
+            app.Account_Input = uieditfield(app.UIFigure, 'numeric');
+            app.Account_Input.Visible = 'off';
+            app.Account_Input.Position = [103 301 100 22];
+
+            % Create NewPasswordLabel
+            app.NewPasswordLabel = uilabel(app.UIFigure);
+            app.NewPasswordLabel.HorizontalAlignment = 'right';
+            app.NewPasswordLabel.Visible = 'off';
+            app.NewPasswordLabel.Position = [2 302 86 22];
+            app.NewPasswordLabel.Text = 'New Password';
+
+            % Create New_PW_Input
+            app.New_PW_Input = uieditfield(app.UIFigure, 'text');
+            app.New_PW_Input.Visible = 'off';
+            app.New_PW_Input.Position = [103 301 100 22];
+
+            % Create Confirm_change_pw
+            app.Confirm_change_pw = uibutton(app.UIFigure, 'push');
+            app.Confirm_change_pw.ButtonPushedFcn = createCallbackFcn(app, @Confirm_change_pwButtonPushed, true);
+            app.Confirm_change_pw.Visible = 'off';
+            app.Confirm_change_pw.Position = [103 268 100 22];
+            app.Confirm_change_pw.Text = 'Confirm';
+
+            % Create AmountLabel
+            app.AmountLabel = uilabel(app.UIFigure);
+            app.AmountLabel.HorizontalAlignment = 'right';
+            app.AmountLabel.Visible = 'off';
+            app.AmountLabel.Position = [40 302 48 22];
+            app.AmountLabel.Text = 'Amount';
+
+            % Create Amount_Input
+            app.Amount_Input = uieditfield(app.UIFigure, 'numeric');
+            app.Amount_Input.Visible = 'off';
+            app.Amount_Input.Position = [103 302 100 22];
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

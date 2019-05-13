@@ -18,7 +18,7 @@ and then a window like the following will pop up. This GUI serves as the actions
 
 ![image-20190513195900070](assets/image-20190513195900070.png)
 
-We will introduce how to use the system according to iteration phase specified in [Iteration plan](#Iteration plan).
+We will introduce how to use the system according to iteration phase specified in [Iteration plan](#iteration-plan).
 
 ## Iteration 0
 

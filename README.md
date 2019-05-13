@@ -36,6 +36,36 @@ If any of three pieces of information is input wrongly, the removal will fail.
 
 
 
+### Iteration 1
+
+**Deposit**. You can input the *account number* and *the amount of money*.
+
+![image-20190513220539386](assets/image-20190513220539386.png)
+
+If you input the account number correctly, you can top up money.
+
+![image-20190513221455523](assets/image-20190513221455523.png)
+
+If you input invalidly, the procedure will fail, which can be caused by account that does not exist or negative amount.
+
+![image-20190513221623620](assets/image-20190513221623620.png)
+
+![image-20190513221639434](assets/image-20190513221639434.png)
+
+**Change Password**. You need provide *account number, the old password* and *the new password* in order to change password.
+
+If you input all the information correctly, you will have the feedback.
+
+![image-20190513221903119](assets/image-20190513221903119.png)
+
+In other situations, it will fail.
+
+![image-20190513222001290](assets/image-20190513222001290.png)
+
+
+
+
+
 ## Iteration plan
 
 Banking System 1.0 (can open account, close account and change password)

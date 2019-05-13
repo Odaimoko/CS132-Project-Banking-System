@@ -189,9 +189,9 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
                     account_id=bs.addAccount(identity_no,pw);
                     result=bs.addCard(identity_no,account_id,pw);
                     if result
-                        app.Message_Feedback.Text=['Card added successfully. ' newline 'Card No. ' num2str(result)];
+                        app.Message_Feedback.Text=['Account added successfully. ' newline 'Account No. ' num2str(result)];
                     else
-                        app.Message_Feedback.Text='Card added Failed';
+                        app.Message_Feedback.Text='Account added Failed';
                     end
                 end
             end
@@ -212,12 +212,12 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
                 if pw==""
                     app.Message_Feedback.Text='Password cannot be emtpy';
                 else
-                    app.Message_Feedback.Text='Card removed Failed';
+                    app.Message_Feedback.Text='Account removed Failed';
                     bs=Banking_system;
                     if bs.checkPW(account_id,pw)
                         result=bs.removeAccount(identity_no,account_id);
                         if result
-                            app.Message_Feedback.Text='Card removed successfully.';
+                            app.Message_Feedback.Text='Account removed successfully.';
                         end
                     end
                 end
@@ -254,6 +254,7 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
 
         % Button pushed function: Confirm_deposit_money
         function Confirm_deposit_moneyButtonPushed(app, event)
+            'ÿÿ'
             account_id=app.Account_Input.Value;
             amount=app.Amount_Input.Value;
             

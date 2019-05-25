@@ -125,9 +125,24 @@ classdef Banking_system
         
         end
 
-        function outputArg = withdraw(obj,account,password,amount)
+        function outputArg = withdraw(obj,account_id,password,amount)
             
-        
+            outputArg=false;
+            A=obj.db_account('accounts');
+            if isKey(A,account_id)
+                account=A(account_id);
+                cards=account.cards;
+                assert (length(cards)==1)
+                k=keys(cards);
+                k=k{1};
+                if cards(k)<amount
+                    outputArg=false;
+                else
+                    outputArg=true;
+                    cards(k)=cards(k)-amount;
+                    save 'data/sys.mat' obj
+                end
+            end
         end
         
         

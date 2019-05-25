@@ -27,6 +27,9 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
         Confirm_change_pw       matlab.ui.control.Button
         AmountLabel             matlab.ui.control.Label
         Amount_Input            matlab.ui.control.NumericEditField
+        Confirm_transfer        matlab.ui.control.Button
+        ToAccountNoLabel        matlab.ui.control.Label
+        To_Account_Input        matlab.ui.control.NumericEditField
     end
 
     
@@ -49,16 +52,19 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             app.Account_Input.Visible=0;
             app.Amount_Input.Visible=0;
             app.New_PW_Input.Visible=0;
+            app.To_Account_Input.Visible=0;
             app.Confirm_open_account.Visible=0;
             app.Confirm_close_account.Visible=0;
             app.Confirm_deposit_money.Visible=0;
             app.Confirm_withdraw_money.Visible=0;
             app.Confirm_change_pw.Visible=0;
+            app.Confirm_transfer.Visible=0;
             app.IdLabel.Visible=0;
             app.PasswordLabel.Visible=0;
             app.AccountNoLabel.Visible=0;
             app.AmountLabel.Visible=0;
             app.NewPasswordLabel.Visible=0;
+            app.ToAccountNoLabel.Visible=0;
             
             
             app.Message_Feedback.Visible=0;
@@ -151,6 +157,29 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             end
             if strcmp(selectedButton.Text,app.transfer.Text)
                 'Transfer'
+                
+                app.AccountNoLabel.Visible=1;
+                app.Account_Input.Visible=1;
+                app.Account_Input.Position(2)=app.y_1st_edit_box;
+                app.AccountNoLabel.Position(2)=app.y_1st_edit_box;
+                
+                app.PW_Input.Visible=1;
+                app.PasswordLabel.Visible=1;
+                app.PW_Input.Position(2)=app.y_2nd_edit_box;
+                app.PasswordLabel.Position(2)=app.y_2nd_edit_box;
+                
+                app.AmountLabel.Visible=1;
+                app.Amount_Input.Visible=1;
+                app.Amount_Input.Position(2)=app.y_3rd_edit_box;
+                app.AmountLabel.Position(2)=app.y_3rd_edit_box;
+                
+                app.To_Account_Input.Visible=1;
+                app.ToAccountNoLabel.Visible=1;
+                app.To_Account_Input.Position(2)=app.y_4th_edit_box;
+                app.ToAccountNoLabel.Position(2)=app.y_4th_edit_box;
+                
+                app.Confirm_transfer.Visible=1;
+                
             end
             if strcmp(selectedButton.Text,app.change_password.Text)
                 'Change Password'
@@ -279,7 +308,28 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
 
         % Button pushed function: Confirm_withdraw_money
         function Confirm_withdraw_moneyButtonPushed(app, event)
-            
+            account_id=app.Account_Input.Value;
+            amount=app.Amount_Input.Value;
+            pw=app.PW_Input.Value;
+            app.Message_Feedback.Text='Money withdrawn failed';
+            if account_id==0
+                app.Message_Feedback.Text='Account cannot be emtpy';
+            else
+                if amount<=0
+                    app.Message_Feedback.Text='Amount invalid';
+                else
+                    if pw==""
+                        app.Message_Feedback.Text='Password cannot be emtpy';
+                    else
+                        bs=Banking_system;
+                        if bs.withdraw(account_id,pw,amount)                   
+                            app.Message_Feedback.Text='Money withdrawn successfully';
+                        end
+                    end
+                end
+            end
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
         end
 
         % Button pushed function: next_customer
@@ -294,6 +344,39 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
                 app.Message_Feedback.Text=['Ticket Number Got successfully.' newline 'Next Customer Ticket No. ' num2str(ticket_no)];
             end
             
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
+        end
+
+        % Button pushed function: Confirm_transfer
+        function Confirm_transferButtonPushed(app, event)
+            account_id=app.Account_Input.Value;
+            to_acc=app.To_Account_Input.Value;
+            amount=app.Amount_Input.Value;
+            pw=app.PW_Input.Value;
+            app.Message_Feedback.Text='Money transfer failed';
+            if account_id==0 || to_acc==0
+                app.Message_Feedback.Text='Account cannot be emtpy';
+            else
+                if amount<=0
+                    app.Message_Feedback.Text='Amount invalid';
+                else
+                    if pw==""
+                        app.Message_Feedback.Text='Password cannot be emtpy';
+                    else
+                        bs=Banking_system;
+                        if bs.withdraw(account_id,pw,amount)
+                            if bs.deposit(to_acc,amount)
+                               app.Message_Feedback.Text='Money transfered successfully';
+                            else
+                               bs.deposit(account_id,amount);
+                            end
+                        else
+                            app.Message_Feedback.Text='Money transfered failed';
+                        end
+                    end
+                end
+            end
             app.Message_Feedback.Visible=1;
             app.Message_Feedback.Position=[243,367,198,42];
         end
@@ -396,7 +479,7 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             app.Confirm_withdraw_money = uibutton(app.UIFigure, 'push');
             app.Confirm_withdraw_money.ButtonPushedFcn = createCallbackFcn(app, @Confirm_withdraw_moneyButtonPushed, true);
             app.Confirm_withdraw_money.Visible = 'off';
-            app.Confirm_withdraw_money.Position = [103 236 100 22];
+            app.Confirm_withdraw_money.Position = [103 268 100 22];
             app.Confirm_withdraw_money.Text = 'Confirm';
 
             % Create Message_Feedback
@@ -448,6 +531,25 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             app.Amount_Input = uieditfield(app.UIFigure, 'numeric');
             app.Amount_Input.Visible = 'off';
             app.Amount_Input.Position = [103 302 100 22];
+
+            % Create Confirm_transfer
+            app.Confirm_transfer = uibutton(app.UIFigure, 'push');
+            app.Confirm_transfer.ButtonPushedFcn = createCallbackFcn(app, @Confirm_transferButtonPushed, true);
+            app.Confirm_transfer.Visible = 'off';
+            app.Confirm_transfer.Position = [103 234 100 22];
+            app.Confirm_transfer.Text = 'Confirm';
+
+            % Create ToAccountNoLabel
+            app.ToAccountNoLabel = uilabel(app.UIFigure);
+            app.ToAccountNoLabel.HorizontalAlignment = 'right';
+            app.ToAccountNoLabel.Visible = 'off';
+            app.ToAccountNoLabel.Position = [0 269 88 22];
+            app.ToAccountNoLabel.Text = 'To Account No.';
+
+            % Create To_Account_Input
+            app.To_Account_Input = uieditfield(app.UIFigure, 'numeric');
+            app.To_Account_Input.Visible = 'off';
+            app.To_Account_Input.Position = [103 269 100 22];
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

@@ -135,7 +135,7 @@ classdef Banking_system
                 assert (length(cards)==1)
                 k=keys(cards);
                 k=k{1};
-                if cards(k)<amount
+                if cards(k)<amount || ~strcmp(password,account.password)
                     outputArg=false;
                 else
                     outputArg=true;
@@ -144,7 +144,6 @@ classdef Banking_system
                 end
             end
         end
-        
         
 
         function ticket_no = newTicket(obj)

@@ -1,3 +1,4 @@
+
 classdef Banking_system
     %BANKING_SYSTEM 此处显示有关此类的摘要
     %   此处显示详细说明
@@ -8,6 +9,7 @@ classdef Banking_system
         db_ticket;
         db_clerk;
         db_account;
+
     end
     
     methods
@@ -15,8 +17,6 @@ classdef Banking_system
             %BANKING_SYSTEM 构造此类的实例
             %   此处显示详细说明
 %             Read existing or create database
-
-
             if ~exist('data','dir')
                 mkdir('data')
             end
@@ -29,10 +29,12 @@ classdef Banking_system
                 obj.db_account('nextCardID')=1;
                 obj.db_account('accounts')=containers.Map(0,struct); % person id maps to list of cards
                 remove(obj.db_account('accounts'),0)
-                obj.db_ticket=0;
+                obj.db_ticket= containers.Map;
+                obj.db_ticket('q')=CQueue;
+                obj.db_ticket('max')=0;
+                % https://ww2.mathworks.cn/matlabcentral/fileexchange/28922-list-queue-stack
             end
             % initialize ticket account in mem
-            % init clerk 
             save 'data/sys.mat' obj
         end
         
@@ -110,8 +112,6 @@ classdef Banking_system
         end
         
         function outputArg = deposit(obj,account_id,amount)
-        %
-        % Deposit certain amount into account_id.
             outputArg=false;
             A=obj.db_account('accounts');
             if isKey(A,account_id)
@@ -135,13 +135,22 @@ classdef Banking_system
         
         
 
-        function ticket_no = getTicket(obj)
-            %METHOD1 此处显示有关此方法的摘要
-            %   此处显示详细说明
-            ticket_no=obj.db_ticket;
-            obj.db_ticket=obj.db_ticket+1;
+        function ticket_no = newTicket(obj)
+            obj.db_ticket('max')=obj.db_ticket('max')+1;
+            ticket_no=obj.db_ticket('max');
+            q=obj.db_ticket('q');
+            q.push(ticket_no);
             save 'data/sys.mat' obj
+        end
+
+        function ticket_no = nextTicket(obj)
+            q=obj.db_ticket('q');
+            if q.empty()==0
+                ticket_no=-1;
+            else
+                ticket_no=  q.pop();
+                save 'data/sys.mat' obj
+            end 
         end
     end
 end
-

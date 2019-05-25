@@ -9,7 +9,6 @@ classdef Banking_system
         db_ticket;
         db_clerk;
         db_account;
-
     end
     
     methods
@@ -56,7 +55,6 @@ classdef Banking_system
             outputArg=account.accoutID;
         end
 
-
         function outputArg = addCard(obj,person_id,account_id,password)
             A=obj.db_account('accounts');
             outputArg=false;
@@ -75,7 +73,6 @@ classdef Banking_system
                 end
             end
         end
-
 
         function outputArg = checkPW(obj,account_id,password)
             outputArg=false;
@@ -145,10 +142,10 @@ classdef Banking_system
 
         function ticket_no = nextTicket(obj)
             q=obj.db_ticket('q');
-            if q.empty()==0
+            if q.size()==0
                 ticket_no=-1;
             else
-                ticket_no=  q.pop();
+                ticket_no= q.pop();
                 save 'data/sys.mat' obj
             end 
         end

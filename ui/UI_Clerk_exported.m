@@ -10,6 +10,7 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
         withdraw                matlab.ui.control.ToggleButton
         transfer                matlab.ui.control.ToggleButton
         change_password         matlab.ui.control.ToggleButton
+        next_customer           matlab.ui.control.Button
         IdLabel                 matlab.ui.control.Label
         Identity_Input          matlab.ui.control.NumericEditField
         PasswordLabel           matlab.ui.control.Label
@@ -62,6 +63,7 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             
             app.Message_Feedback.Visible=0;
         end
+        
     end
     
 
@@ -169,9 +171,11 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
                 app.NewPasswordLabel.Position(2)=app.y_3rd_edit_box;
 
                 app.Confirm_change_pw.Visible=1;
-
             end
-            
+            if strcmp(selectedButton.Text,app.next_customer.Text)
+                'Next Customer'
+                app.getNextTicketNo();
+            end
         end
 
         % Button pushed function: Confirm_open_account
@@ -254,19 +258,18 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
 
         % Button pushed function: Confirm_deposit_money
         function Confirm_deposit_moneyButtonPushed(app, event)
-            'ÿÿ'
             account_id=app.Account_Input.Value;
             amount=app.Amount_Input.Value;
-            
+            app.Message_Feedback.Text='Money add failed';
             if account_id==0
-                app.Message_Feedback.Text='Id cannot be emtpy';
+                app.Message_Feedback.Text='Account cannot be emtpy';
             else
-                if amount==0
-                    app.Message_Feedback.Text='Amount cannot be emtpy';
+                if amount<=0
+                    app.Message_Feedback.Text='Amount invalid';
                 else
                     bs=Banking_system;
                     if bs.deposit(account_id,amount)                   
-                        app.Message_Feedback.Text='Amount added successfully';
+                        app.Message_Feedback.Text='Money added successfully';
                     end
                 end
             end
@@ -277,6 +280,22 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
         % Button pushed function: Confirm_withdraw_money
         function Confirm_withdraw_moneyButtonPushed(app, event)
             
+        end
+
+        % Button pushed function: next_customer
+        function next_customerButtonPushed(app, event)
+            app.Clear_all_components();
+            bs=Banking_system;
+            
+            ticket_no=bs.nextTicket();
+            if ticket_no==-1
+                app.Message_Feedback.Text='No next customer';
+            else
+                app.Message_Feedback.Text=['Ticket Number Got successfully.' newline 'Next Customer Ticket No. ' num2str(ticket_no)];
+            end
+            
+            app.Message_Feedback.Visible=1;
+            app.Message_Feedback.Position=[243,367,198,42];
         end
     end
 
@@ -326,6 +345,12 @@ classdef UI_Clerk_exported < matlab.apps.AppBase
             app.change_password = uitogglebutton(app.ButtonGroup);
             app.change_password.Text = 'Change Password';
             app.change_password.Position = [4 175 114 26];
+
+            % Create next_customer
+            app.next_customer = uibutton(app.ButtonGroup, 'push');
+            app.next_customer.ButtonPushedFcn = createCallbackFcn(app, @next_customerButtonPushed, true);
+            app.next_customer.Position = [11 145 100 22];
+            app.next_customer.Text = 'Next Customer';
 
             % Create IdLabel
             app.IdLabel = uilabel(app.UIFigure);

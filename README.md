@@ -8,13 +8,15 @@ This is the project for CS132 Software Engineering @ Shanghaitech.
 
 ## How to run GUI
 
-Run your matlab and change directory to `ui`. Type
+Run your matlab and change directory to `ui`. Run
 
 ```
-run
+path
 ```
 
-and then a window like the following will pop up. This GUI serves as the actions a clerk can take at the counter.
+and this will prepare the PATH for the project.
+
+Run `UI_Clerk_exported`, and then a window like the following will pop up. This GUI serves as the actions a clerk can take at the counter.
 
 ![image-20190513195900070](assets/image-20190513195900070.png)
 

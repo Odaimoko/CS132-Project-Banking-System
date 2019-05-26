@@ -11,7 +11,7 @@ This is the project for CS132 Software Engineering @ Shanghaitech.
 Run your matlab and change directory to `ui`. Run
 
 ```
-path
+hi-path
 ```
 
 and this will prepare the PATH for the project.
